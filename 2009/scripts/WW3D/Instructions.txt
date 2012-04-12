@@ -1,0 +1,45 @@
+********************************************************************************************
+* WireWorks3D Instructions
+********************************************************************************************
+
+Open Max Drawing
+
+Open MAXScript Listener: MAXScript > MAXScript Listener...
+ File > Open Script... > U:\WireWorks3D\3DS Max\Library.ms
+  (future location: V:\MAXnet\MAX 2008\scripts\WireWorks3D\Library.ms)
+  Tools > Evaluate All (Ctrl+E)
+  Tools > Evaluate All (Ctrl+E)
+  Tools > Evaluate All (Ctrl+E)
+
+MAXScript Listener:
+ WW()
+
+Select Reference Origin. This will be used to ____
+
+Step 1: Offset Mesh
+Specify the desired offset distance. The default is -3".
+ Note: Include a minus sign to offset backwards
+Select a mesh object
+Click "Offset Mesh".
+
+Step 2: Slice mesh into elevations
+Specify the desired elevation spacing in inches. The default is 2 meters which is 78.74 inches.
+Select a mesh object
+Click "Slice Elevations".
+
+Step 3: Panelize
+Specify the desired panel width in inches. The default is 2 meters which is 78.74 inches.
+Specify the maximum number of mesh vertices for QuickSlice. The default is 15,000 nodes.
+ Explanation: 3D Studio Max has a few built-in subroutines for slicing meshes. These subroutines are very fast but sometimes they fail to correctly slice the meshes. Therefore, WireWorks3D performs a check to verify the accuracy of each mesh slice that 3D Studio Max generates. If the mesh was sliced incorrectly, then WireWorks3D will calculate the mesh slice. If the mesh is small enough, WireWorks can quickly and accurately calculate the mesh slice using scripter memory. However, if the mesh is too large, WireWorks must calculate the mesh using the hard drive (3D Studio Max will crash if it runs out of scripter memory). This is a very slow process, so it is preferable to use scripter memory whenever possible. For most systems, meshes below 15,000 nodes can be safely sliced using scripter memory.
+Click "Panelize".
+
+Step 4: Create Bars
+Specify the desired bar spacing. This should be an integer fraction of the desired panel width. The default is 6.057" which is 1/13th of 2 meters.
+Specify the desired bend spacing. This is the minimum allowable distance between wire bends. The default is 1".
+Specify the tolerance. This is the maximum allowable deviation of the wires from the mesh when simplifying the wires. The default is 0.001".
+Select everything.
+Click "Create Bars".
+
+Step 5: Export Bars
+Select everything.
+Click "Export Bars".

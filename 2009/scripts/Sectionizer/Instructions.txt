@@ -1,0 +1,63 @@
+Camtasia:
+Trim Near Objects
+
+C:\Scenario\Sectionizer\Test\SectionCamera01\Object.ai
+
+******************************************************************************************
+* Sectionizer Instructions
+******************************************************************************************
+
+* Step 0:
+Make sure the Swift 3D "Toon" renderer plug-in for 3DS Max is installed: U:/Sectionizer/Swift 3D/Swift3DMAXV03Release-164.exe
+
+* Step 1:
+Open the AutoCAD plan view with section lines: U:\Sectionizer\Demo\Demo.max
+There should be polylines showing the desired sections on the "Section" layer.
+
+* Step 2:
+Click on the "Export Cameras" icon.
+
+* Step 3:
+Open the original 3D Studio Max mesh model: \\SDI-FS1\Design\Users\Paul Nylander\Mummy\Anubis Mesh.max
+
+* Step 5:
+MAXScript > MAXScript Listener...
+ File > Open Script... > U:\Sectionizer\Sectionizer.ms
+  Tools > Evaluate All (Ctrl+E)
+
+* Step 6:
+ File > Open Script... > U:\Sectionizer\Cameras.ms
+  Tools > Evaluate All (Ctrl+E)
+cameras should be created
+
+* Step 7:
+select a camera
+MAXScript Listener: ToonRender($);
+Render Scene Dialog should be opened (icon with tea pot)
+ Common tab
+  Assign Renderer > Production > ... > Swift 3D MAX Renderer
+  Output Size > Image Aspect: 0.8
+ Renderer tab
+  File Options
+   Save as... > U:\Sectionizer\SectionCamera01.ai
+   Target File Type: Adobe Illustrator (*.ai)
+  Fill Options
+   Fill Type: Cartoon Single Color Fill
+   no: Show Back Faces
+   no: Include Shadows
+  Edge Options
+   Edge Type: Outlines
+   Line Weight: 0.001
+   no?: Outlines At Intersections
+   no?: Include Edge Detail
+  Curve Fitting
+   move slider all the way to Lines
+   no?: Two Pass Curve Fitting
+  no?: Combine Edges and Fills
+  Detail Level: High
+  no: Override Object Properties
+  Render
+
+* Step 8:
+Go back to AutoCAD: U:\Sectionizer\Anubis Mesh.dwg
+Type "ImportSection" at the command prompt

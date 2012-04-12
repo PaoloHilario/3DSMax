@@ -1,0 +1,1 @@
+if isnetserver() do sysinfo.maxpriority = #low

@@ -1,0 +1,6 @@
+name "CGsoldier Tools"
+version 1.0
+treeCopy scripts to $scripts
+treeCopy startup to $startupScripts
+treeCopy usericons to $userIcons
+treeCopy usermacros to $userMacros
