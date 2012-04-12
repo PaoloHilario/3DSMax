@@ -1,0 +1,7 @@
+name "CGsoldier Tools"
+version 1.0
+treeCopy "scripts\*.*" to "$maxdata"
+treeCopy "startup" to "$userscripts"
+treeCopy "usericons" to "$maxdata\UI"
+treeCopy "usermacros" to "$maxdata\UI"
+run "InstallComplete.ms"
