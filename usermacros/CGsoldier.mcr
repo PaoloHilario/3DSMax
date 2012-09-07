@@ -10,7 +10,7 @@
 --- Startup Function FileIns --- 
 -------------------------------------------------------------------------------
 
-include "$userScripts\\CGsoldier\\library\\CGS_func.mse"
+include "$userScripts\\CGsoldier\\functions\\CGS_func.mse"
 
 -------------------------------------------------------------------------------
 --- CGsoldier Scripts - Launchers

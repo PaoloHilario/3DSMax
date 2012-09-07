@@ -10,18 +10,12 @@
 --- Startup Function FileIns --- 
 -------------------------------------------------------------------------------
 
-include "$userScripts\\CGsoldier\\functions\\BSStartup.mse"
-include "$userScripts\\CGsoldier\\functions\\F360Lib_Functions.mse"
 include "$userScripts\\CGsoldier\\functions\\CGS_func.mse"
 
 -------------------------------------------------------------------------------
 --- CGsoldier Scripts - Launchers
 -------------------------------------------------------------------------------
 	
-MacroScript CGS_MT category:"CGsoldier Tools" tooltip:"CGsoldier Modeling Tools" Icon:#("CGsoldier", 12)
-	(
-	include "$userScripts\\CGsoldier\\CGS-ModelingTools.mse"
-	)
 
 MacroScript CGS_ST category:"CGsoldier Tools" tooltip:"CGsoldier Scene Tools" Icon:#("CGsoldier",2)
 	(
@@ -32,11 +26,12 @@ MacroScript CGS_RD category:"CGsoldier Tools" tooltip:"CGsoldier R&D Scripts" Ic
 	(
 	include "$userScripts\\CGsoldier\\CGS-R&DTools.mse"
 	)
-
-MacroScript BSRun category:"CGsoldier Tools" tooltip:"Blur Scripts" Icon:#("CGS-BlurScripts",51)
+	
+MacroScript CGS_MT category:"CGsoldier Tools" tooltip:"CGsoldier Modeling Tools" Icon:#("CGsoldier", 12)
 	(
-	include "$userScripts\\BlurScripts\\BSRun.mse"
+	include "$userScripts\\CGsoldier\\CGS-ModelingTools.mse"
 	)
+
 	
 -------------------------------------------------------------------------------
 --- CGsoldier Scripts - Scene Tools

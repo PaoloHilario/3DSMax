@@ -1,0 +1,1 @@
+filein ((getdir #userscripts) + "\\CGsoldier\\functions\\CGS_func.mse")

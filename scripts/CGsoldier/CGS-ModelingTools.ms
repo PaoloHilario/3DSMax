@@ -24,7 +24,7 @@
 -- Includes
 -------------------------------------------------------------------------------
 
-include "$userscripts\\CGsoldier\\library\\CGS_func.mse"
+include "$userscripts\\CGsoldier\\functions\\CGS_func.mse"
 
 -------------------------------------------------------------------------------
 -- Global Variables

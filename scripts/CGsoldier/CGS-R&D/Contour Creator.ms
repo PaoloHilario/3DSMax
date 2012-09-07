@@ -143,8 +143,8 @@
 		(
 			label lbl1 "Label" pos:[11,12] width:280 height:17
 			groupBox grp1 "Slice Axis" pos:[10,33] width:264 height:56
-			checkButton ckbX "Along X" pos:[16,55] width:72 height:24 enabled:false
-			checkButton ckbY "Along Y" pos:[104,55] width:72 height:24 enabled:false
+			checkButton ckbX "Along X" pos:[16,55] width:72 height:24 enabled:true
+			checkButton ckbY "Along Y" pos:[104,55] width:72 height:24 enabled:true
 			checkButton ckbZ "Along Z" pos:[192,55] width:72 height:24 checked:true
 			spinner spn1 "Contour Spacing: " pos:[55,110] width:100 height:35 type:#worldunits scale:1 labelontop:true range:[0,9999,0] 
 			button btn1 "Create Contours" pos:[164,100] width:110 height:35
