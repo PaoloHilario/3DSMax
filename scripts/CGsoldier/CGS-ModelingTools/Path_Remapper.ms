@@ -43,7 +43,7 @@ local theRange
 
 -- Includes
 
-include "$userscripts/BlurScripts/BSLib.ms"
+fileIn "$userscripts\\BlurScripts\\BSLib.mse"
 
 -- Close Old Dialogs
 

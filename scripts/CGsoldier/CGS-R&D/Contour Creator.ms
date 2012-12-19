@@ -139,7 +139,7 @@
 --- Rollout Definition
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
-	rollout ES_Rollout "Elevation Slicer" width:280 height:150
+	rollout ES_Rollout "Contour Creator" width:280 height:150
 		(
 			label lbl1 "Label" pos:[11,12] width:280 height:17
 			groupBox grp1 "Slice Axis" pos:[10,33] width:264 height:56

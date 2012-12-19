@@ -17,7 +17,7 @@ include "$userScripts\\CGsoldier\\functions\\CGS_func.mse"
 -------------------------------------------------------------------------------
 	
 
-MacroScript CGS_ST category:"CGsoldier Tools" tooltip:"CGsoldier Scene Tools" Icon:#("CGsoldier",2)
+MacroScript CGS_ST category:"CGsoldier Tools" tooltip:"CGsoldier Scene Tools" Icon:#("CGsoldier", 2)
 	(
 	include "$userScripts\\CGsoldier\\CGS-SceneTools.mse"
 	)
@@ -30,6 +30,11 @@ MacroScript CGS_RD category:"CGsoldier Tools" tooltip:"CGsoldier R&D Scripts" Ic
 MacroScript CGS_MT category:"CGsoldier Tools" tooltip:"CGsoldier Modeling Tools" Icon:#("CGsoldier", 12)
 	(
 	include "$userScripts\\CGsoldier\\CGS-ModelingTools.mse"
+	)
+
+MacroScript BSRun category:"CGsoldier Tools" tooltip:"Blur Scripts" Icon:#("CGS-BlurScripts",51)
+	(
+	include "$userScripts\\BlurScripts\\BSRun.mse"
 	)
 
 	

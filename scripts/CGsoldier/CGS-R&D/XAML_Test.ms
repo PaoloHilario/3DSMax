@@ -1,0 +1,4 @@
+XamlReader=dotnetclass "System.Windows.Markup.XamlReader"
+XamlString="<Window \n    xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\n    xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\n    Title=\"Window1\" Height=\"300\" Width=\"300\">\n    <Grid>\n        <Button Height=\"22\" HorizontalAlignment=\"Left\" Margin=\"12,12,0,0\" Name=\"Button1\" VerticalAlignment=\"Top\" Width=\"87\">Button</Button>\n        <ComboBox Margin=\"0,12,12,0\" Name=\"ComboBox1\" Height=\"22\" VerticalAlignment=\"Top\" HorizontalAlignment=\"Right\" Width=\"122\" />\n        <ListBox Margin=\"12,58,12,12\" Name=\"ListBox1\" />\n    </Grid>\n</Window>"
+XamlWindow=XamlReader.Parse  XamlString
+XamlWindow.Show()

@@ -48,7 +48,6 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
 	include "$userscripts\\CGsoldier\\functions\\CGS_func.ms"
-	if XXX_rollout != undefined then DestroyDialog XXX_rollout
 	
 ---------------------------------------------------------------------------------------------------------------------------------------------
 --- Function Definition
@@ -71,10 +70,10 @@
 ---------------------------------------------------------------------------------------------------------------------------------------------
 --- Rollout Launcher
 ---------------------------------------------------------------------------------------------------------------------------------------------
-		if XXX_rollout != undefined do DestroyDialog XXX_rollout
-			(
-			CreateDialog XXX_rollout 200 100 FLx FLy
-			)
+		
+	if XXX_rollout != undefined then DestroyDialog XXX_rollout
+	CreateDialog XXX_rollout 200 100 FLx FLy
+
 
 	
 ) --End Script

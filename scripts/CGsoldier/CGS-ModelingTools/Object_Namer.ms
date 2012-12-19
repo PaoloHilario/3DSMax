@@ -60,7 +60,7 @@
 --- Include Scripts & Kill Old Windows
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
-	FileIn "$userscripts\\CGsoldier\\functions\\CGS_func.mse"	
+	fileIn "$userscripts\\CGsoldier\\functions\\CGS_func.mse"	
 	if namer_floater != undefined then CloseRolloutFloater namer_floater
 
 ---------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
---- IPDS Manager v1.0 beta
+--- Construction Simulator v1.0 beta
 --- Written for Scenario Design, Inc. 
 --- By Paolo Hilario				
 --- http://www.cgsoldier.com	
