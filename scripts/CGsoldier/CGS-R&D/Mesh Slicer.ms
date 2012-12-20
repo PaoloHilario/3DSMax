@@ -44,6 +44,7 @@
 --- Local Variables
 	
 	local sliceset
+	local refobj
 	
 ---------------------------------------------------------------------------------------------------------------------------------------------
 --- Include Scripts & Kill Old Windows
@@ -56,91 +57,81 @@
 --- Function Definition
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-fn detachX delta =
-	(
-	local plist = #()
-	for i = 1 to (polyop.getnumverts $) do
-		(
-		p = polyop.getVert $ i 
-		if p.X <= (delta-1) then append plist i 
-		)
-	polyop.detachFaces $ (polyop.getFacesUsingVert $ plist) asNode:True delete:true
-	)
-	
-fn detachY delta =
-	(
-	local plist = #()
-	for i = 1 to (polyop.getnumverts $) do
-		(
-		p = polyop.getVert $ i 
-		if p.Y <= (delta-1) then append plist i 
-		)
-	polyop.detachFaces $ (polyop.getFacesUsingVert $ plist) asNode:True delete:true
-	)
-	
-fn detachZ delta =
-	(
-	local plist = #()
-	for i = 1 to (polyop.getnumverts $) do
-		(
-		p = polyop.getVert $ i 
-		if p.Z <= (delta-1) then append plist i 
-		)
-	polyop.detachFaces $ (polyop.getFacesUsingVert $ plist) asNode:True delete:true
-	)
-	
-fn SliceX obj delta =
+fn SliceX obj delta detach=
 	(
 	select sliceset
-	center = obj.center
-	minX = obj.min.x
+	minX = refobj.min.x
 	maxX = obj.max.x
-	minY = obj.min.y
-	maxY = obj.max.y
-	minZ = obj.min.z
-	maxZ = obj.max.z
-	for currentX = minX to maxX by delta do
+		for obj in sliceset do
 		(
-			obj.split = on
-			obj.slice [1,0,0] [currentX,0,0]
-			detachX currentX
+			if detach == true then
+			(
+			for currentX = minX to maxX by delta do
+				(
+					cpy = copy obj
+					meshop.slice cpy cpy.faces [-1,0,0] -currentX seperate:true delete:true 
+					meshop.slice cpy cpy.faces [1,0,0] (currentX - delta) seperate:true delete:true 
+				)
+			)
+			else
+			(
+			for currentX = minX to maxX by delta do
+				(
+					meshop.slice obj obj.faces [1,0,0] currentZ seperate:true  
+				)
+			)
 		)
 	)
 	
-fn SliceY obj delta =
+fn SliceY obj delta detach =
 	(
-	select sliceset
-	center = obj.center
-	minX = obj.min.x
-	maxX = obj.max.x
-	minY = obj.min.y
-	maxY = obj.max.y
-	minZ = obj.min.z
-	maxZ = obj.max.z
-	for currentY = minY to maxY by delta do
+		select sliceset
+		minY = refobj.min.y
+		maxY = obj.max.y
+		for obj in sliceset do
 		(
-			obj.split = on
-			obj.slice [0,1,0] [0,currentY,0]
-			detachY currentY
+			if detach == true then
+			(
+			for currentY = minY to maxY by delta do
+				(
+					cpy = copy obj
+					meshop.slice cpy cpy.faces [0,-1,0] -currentY seperate:true delete:true 
+					meshop.slice cpy cpy.faces [0,1,0] (currentY - delta) seperate:true delete:true 
+				)
+			)
+			else
+			(
+			for currentY = minY to maxY by delta do
+				(
+					meshop.slice obj obj.faces [0,1,0] currentY seperate:true  
+				)
+			)
 		)
 	)
 	
-fn SliceZ obj delta = 
+fn SliceZ obj delta detach = 
 	(
-	select sliceset
-	obj.split = on
-	center = obj.center
-	minX = obj.min.x
-	maxX = obj.max.x
-	minY = obj.min.y
-	maxY = obj.max.y
-	minZ = obj.min.z
-	maxZ = obj.max.z
-	for currentZ = minZ to maxZ by delta do
+		select sliceset
+		minZ = refobj.min.z
+		maxZ = obj.max.z
+		for obj in sliceset do
 		(
-			obj.split = on
-			obj.slice [0,0,1] [0,0,currentZ]
-			detachZ currentZ
+			if detach == true then
+			(
+			for currentZ = minZ to maxZ by delta do
+				(
+					cpy = copy obj
+					meshop.slice cpy cpy.faces [0,0,-1] -currentZ seperate:true delete:true 
+					meshop.slice cpy cpy.faces [0,0,1] (currentZ - delta) seperate:true delete:true 
+				)
+			)
+			else
+			(
+			for currentZ = minZ to maxZ by delta do
+				(
+					meshop.slice obj obj.faces [0,0,1] currentZ seperate:true  
+				)
+			)
 		)
 	)
 		
@@ -154,27 +145,47 @@ fn SliceZ obj delta =
 			label lbl1 "Label" pos:[11,12] width:280 height:17
 			groupBox grp1 "Slice Axis" pos:[10,33] width:264 height:56
 			checkButton ckbX "Along X" pos:[16,55] width:72 height:24 checked:false
-			checkButton ckbY "Along Y" pos:[104,55] width:72 height:24 checked:true
+			checkButton ckbY "Along Y" pos:[104,55] width:72 height:24 checked:false
 			checkButton ckbZ "Along Z" pos:[192,55] width:72 height:24 checked:false
-			spinner spn1 "Slice Spacing: " pos:[55,110] width:100 height:35 type:#worldunits scale:1 labelontop:true range:[0,9999,0] 
-			button btn1 "Slice & Dice" pos:[164,100] width:110 height:35
+			groupBox grp2 "Options" pos:[10,90] width:264 height:80
+			spinner spn1 "Slice Spacing: " pos:[55,110] width:100 height:25 type:#worldunits scale:1 labelontop:true range:[0,9999,0] 
+			checkBox ckbD "Detach Meshes" pos:[20,140] width:100 height:20 checked:true
+			button btn1 "Pick Ref Object" pos:[170,105] width:95 height:55
+			button btn2 "Slice & Dice" pos:[10,180] width:264 height:35
 			
 		on ES_Rollout open do
 			(
 			lbl1.text = ("Current System Units: " + (units.SystemScale as string) + " = " + (units.SystemType as string))
 			)
 			
-		on btn1 pressed do
+		on btn1 pressed do 
+		(
+			if selection.count == 1 then 
 			(
-			if selection.count == 1 then sliceset = getcurrentselection() else messagebox "No Objects or Too Many Selected"
-			if classof $ == Editable_Poly then 
+				selset = getcurrentselection()
+				refobj = selset[1]
+				btn1.text = refobj.name as string
+			)
+			else messagebox "Please Select Only One Reference Object"
+		)
+		
+		on btn2 pressed do
+			(
+			if selection.count >= 1 and refobj != null 
+				then 
+					sliceset = getcurrentselection() as array 
+				else 
+					messagebox "Please select one reference object and at least one mesh object"
+			
+			if classof $ == Editable_Mesh then 
 				(
-				if ckbX.checked do (SliceX $ spn1.value)
-				if ckbY.checked do (SliceY $ spn1.value)
-				if ckbZ.checked do (SliceZ $ spn1.value)
-				) else
+					if ckbX.checked do (SliceX $ spn1.value ckbD.checked) 
+					if ckbY.checked do (SliceY $ spn1.value ckbD.checked) 
+					if ckbZ.checked do (SliceZ $ spn1.value ckbD.checked) 
+				) 
+			else
 				(
-				messagebox "Object is not an Editable Poly"
+					messagebox "Object is not an Editable Mesh"
 				)
 			)
 		)
@@ -184,7 +195,7 @@ fn SliceZ obj delta =
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
 	(
-	CreateDialog ES_Rollout 280 150
+	CreateDialog ES_Rollout 280 225
 	)
 		
 ) --End Script
