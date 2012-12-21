@@ -57,81 +57,63 @@
 --- Function Definition
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-fn SliceX obj delta detach=
+fn SliceX delta keepOrig=
 	(
-	select sliceset
-	minX = refobj.min.x
-	maxX = obj.max.x
 		for obj in sliceset do
 		(
-			if detach == true then
-			(
-			for currentX = minX to maxX by delta do
+			offset = obj.min.x
+			minX = refobj.min.x
+			maxX = obj.max.x
+			for i in minX to maxX by delta do
 				(
+					currentX = i - offset
 					cpy = copy obj
-					meshop.slice cpy cpy.faces [-1,0,0] -currentX seperate:true delete:true 
-					meshop.slice cpy cpy.faces [1,0,0] (currentX - delta) seperate:true delete:true 
+					print ("Slicing X @ " + (-(currentX + delta)) as string + " N[-1,0,0]")
+					meshop.slice cpy cpy.faces [-1,0,0] -(currentX + delta) seperate:false delete:true 
+					print ("Slicing X @ " + (currentX) as string + " N[1,0,0]")
+					meshop.slice cpy cpy.faces [1,0,0] (currentX) seperate:false delete:true 
 				)
-			)
-			else
-			(
-			for currentX = minX to maxX by delta do
-				(
-					meshop.slice obj obj.faces [1,0,0] currentZ seperate:true  
-				)
-			)
+			if keepOrig == false do delete obj
 		)
 	)
 	
-fn SliceY obj delta detach =
+fn SliceY delta keepOrig =
 	(
-		select sliceset
-		minY = refobj.min.y
-		maxY = obj.max.y
 		for obj in sliceset do
 		(
-			if detach == true then
-			(
-			for currentY = minY to maxY by delta do
+			offset = obj.min.y
+			minY = refobj.min.y
+			maxY = obj.max.y
+			for i in minY to maxY by delta do
 				(
+					currentY = i - offset
 					cpy = copy obj
-					meshop.slice cpy cpy.faces [0,-1,0] -currentY seperate:true delete:true 
-					meshop.slice cpy cpy.faces [0,1,0] (currentY - delta) seperate:true delete:true 
+					print ("Slicing Y @ " + (-(currentY + delta)) as string + " N[0,-1,0]")
+					meshop.slice cpy cpy.faces [0,-1,0] -(currentY + delta)  seperate:false delete:true 
+					print ("Slicing Y @ " + (currentY) as string + " N[0,1,0]")
+					meshop.slice cpy cpy.faces [0,1,0] (currentY) seperate:false delete:true 
 				)
-			)
-			else
-			(
-			for currentY = minY to maxY by delta do
-				(
-					meshop.slice obj obj.faces [0,1,0] currentY seperate:true  
-				)
-			)
+			if keepOrig == false do delete obj
 		)
 	)
 	
-fn SliceZ obj delta detach = 
+fn SliceZ delta keepOrig = 
 	(
-		select sliceset
-		minZ = refobj.min.z
-		maxZ = obj.max.z
 		for obj in sliceset do
 		(
-			if detach == true then
-			(
-			for currentZ = minZ to maxZ by delta do
+			offset = obj.min.z
+			minZ = refobj.min.z
+			maxZ = obj.max.z + delta
+			for i in minZ to maxZ by delta do
 				(
+					currentZ = i - offset
 					cpy = copy obj
-					meshop.slice cpy cpy.faces [0,0,-1] -currentZ seperate:true delete:true 
-					meshop.slice cpy cpy.faces [0,0,1] (currentZ - delta) seperate:true delete:true 
+					print ("Slicing Z @ " + (-(currentZ + delta)) as string + " N[0,0,-1]")
+					meshop.slice cpy cpy.faces [0,0,-1] -(currentZ + delta) seperate:false delete:true 
+					print ("Slicing Z @ " + (currentZ) as string + " N[0,0,1]")
+					meshop.slice cpy cpy.faces [0,0,1] (currentZ)  seperate:false delete:true 
 				)
-			)
-			else
-			(
-			for currentZ = minZ to maxZ by delta do
-				(
-					meshop.slice obj obj.faces [0,0,1] currentZ seperate:true  
-				)
-			)
+			if keepOrig == false do delete obj
 		)
 	)
 		
@@ -140,7 +122,7 @@ fn SliceZ obj delta detach =
 --- Rollout Definition
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
-	rollout ES_Rollout "Elevation Slicer" width:280 height:150
+	rollout ES_Rollout "Mesh Slicer" width:280 height:150
 		(
 			label lbl1 "Label" pos:[11,12] width:280 height:17
 			groupBox grp1 "Slice Axis" pos:[10,33] width:264 height:56
@@ -149,7 +131,7 @@ fn SliceZ obj delta detach =
 			checkButton ckbZ "Along Z" pos:[192,55] width:72 height:24 checked:false
 			groupBox grp2 "Options" pos:[10,90] width:264 height:80
 			spinner spn1 "Slice Spacing: " pos:[55,110] width:100 height:25 type:#worldunits scale:1 labelontop:true range:[0,9999,0] 
-			checkBox ckbD "Detach Meshes" pos:[20,140] width:100 height:20 checked:true
+			checkBox ckbD "Keep Original Mesh" pos:[20,140] width:125 height:20 checked:true 
 			button btn1 "Pick Ref Object" pos:[170,105] width:95 height:55
 			button btn2 "Slice & Dice" pos:[10,180] width:264 height:35
 			
@@ -172,21 +154,12 @@ fn SliceZ obj delta detach =
 		on btn2 pressed do
 			(
 			if selection.count >= 1 and refobj != null 
-				then 
-					sliceset = getcurrentselection() as array 
-				else 
-					messagebox "Please select one reference object and at least one mesh object"
-			
-			if classof $ == Editable_Mesh then 
-				(
-					if ckbX.checked do (SliceX $ spn1.value ckbD.checked) 
-					if ckbY.checked do (SliceY $ spn1.value ckbD.checked) 
-					if ckbZ.checked do (SliceZ $ spn1.value ckbD.checked) 
-				) 
-			else
-				(
-					messagebox "Object is not an Editable Mesh"
-				)
+				then (sliceset = getcurrentselection() as array)
+				else (messagebox "Please select one reference object and at least one mesh object")
+					
+			if ckbX.checked do (SliceX spn1.value ckbD.checked) 
+			if ckbY.checked do (SliceY spn1.value ckbD.checked)
+			if ckbZ.checked do (SliceZ spn1.value ckbD.checked)
 			)
 		)
 	
