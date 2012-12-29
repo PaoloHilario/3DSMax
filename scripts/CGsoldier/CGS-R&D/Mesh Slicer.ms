@@ -61,9 +61,9 @@ fn SliceX delta keepOrig=
 	(
 		for obj in sliceset do
 		(
-			offset = obj.min.x
-			minX = refobj.min.x
-			maxX = obj.max.x
+			offset = obj.pivot.x
+			minX = refobj.pivot.x
+			maxX = obj.max.x + delta
 			for i in minX to maxX by delta do
 				(
 					currentX = i - offset
@@ -81,9 +81,9 @@ fn SliceY delta keepOrig =
 	(
 		for obj in sliceset do
 		(
-			offset = obj.min.y
-			minY = refobj.min.y
-			maxY = obj.max.y
+			offset = obj.pivot.y
+			minY = refobj.pivot.y
+			maxY = obj.max.y + delta
 			for i in minY to maxY by delta do
 				(
 					currentY = i - offset
@@ -101,8 +101,8 @@ fn SliceZ delta keepOrig =
 	(
 		for obj in sliceset do
 		(
-			offset = obj.min.z
-			minZ = refobj.min.z
+			offset = obj.pivot.z
+			minZ = refobj.pivot.z
 			maxZ = obj.max.z + delta
 			for i in minZ to maxZ by delta do
 				(
